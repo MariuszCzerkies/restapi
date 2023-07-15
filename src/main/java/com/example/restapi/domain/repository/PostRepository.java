@@ -20,13 +20,14 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 //    @Query("select p from Post p left join fetch p.comment")//wszytkie wlacznie z tymi co nie mala komentarza
 
     /****
-     * Zapytanie @Query("select p from Post p left join fetch p.comment") pozbyliśmy się z hibernate n+1 zapytan do bazy ale dostlaiśmy jeszcze w logach cos takiego
+     * Zapytanie @Query("select p from Post p left join fetch p.comment") pozbyliśmy się z hibernate n+1 zapytan do bazy ale dostaliśmy jeszcze w logach cos takiego
      * 2023-07-13 23:11:10.088  WARN 17044 --- [nio-8080-exec-8] o.h.h.internal.ast.QueryTranslatorImpl   : HHH000104: firstResult/maxResults specified with collection fetch; applying in memory!
      * powoduje to to że hibernate wykona zpytanie raz ale!!!! np. w pamięci ma 100 tyś. rekordów i z tych 100 tyś. rekordów pobierze ten 5 elementów(tyle sobie ustawiłem teraz w apce)
      * -> nie jest to optymalne
      * */
     @Query("select p from Post p")
     List<Post> findAllPosts(Pageable page);
+
 
     /****
      * A teraz troche inaczej
