@@ -1,7 +1,9 @@
 package com.example.restapi.domain.config;
 
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.service.*;
 import springfox.documentation.spi.DocumentationType;
@@ -16,6 +18,7 @@ import static java.util.Collections.singletonList;
 @Configuration
 @EnableSwagger2 // w propertisach dodałem spring.mvc.pathmatch.matching-strategy = ANT_PATH_MATCHER
 //http://localhost:8080/swagger-ui.html
+@EnableCaching//po dodaniu implementacji cache w dependency w gradlu
 public class Config {
     /**
      * znika ze strony swaggera basic-error-controller
@@ -23,6 +26,7 @@ public class Config {
     @Bean
     public Docket swaggerApi() {
         return new Docket(DocumentationType.SWAGGER_2)
+                .ignoredParameterTypes(UsernamePasswordAuthenticationToken.class)//omija pokazywanie authentication w swagger
                 .select()
                 .paths(PathSelectors.regex("^(?!/(error).*$).*$"))
                 .build()

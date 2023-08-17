@@ -6,6 +6,7 @@ import com.example.restapi.api.login.RestAuthenticationFailureHandler;
 import com.example.restapi.api.login.RestAuthenticationSuccessHandler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -82,6 +83,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return authenticationFilter;
     }
 
+    @Bean
     public UserDetailsManager userDetailsManager() {
         return new JdbcUserDetailsManager(dataSource);
     }
